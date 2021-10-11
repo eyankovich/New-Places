@@ -8,7 +8,6 @@
 import UIKit
 
 class CuisinesCollectionViewCell: UICollectionViewCell {
-    
     @IBOutlet weak var cuisinesLabel: UILabel!
     @IBOutlet weak var collectoonContentView: UIView!
 }
