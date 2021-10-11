@@ -7,14 +7,17 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MainPageViewController: UIViewController {
     
+    //MARK:-   IBVariables
     @IBOutlet weak var placeCollectionView: UICollectionView!
     @IBOutlet weak var categoryCollectionView: UICollectionView!
     
-    var placeCollection: [Places]?
-    var categoryCollection: [Categoies]?
+    //MARK:- Private Variables
+    private var placeCollection: [Places]?
+    private var categoryCollection: [Categoies]?
     
+    //MARK:- Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.placeCollectionView.delegate = self
@@ -25,10 +28,12 @@ class ViewController: UIViewController {
         categoryCollection = setupCategoriesCollection()
     }
     
+    //MARK:- IBAction methods
     @IBAction func showFilter(_ sender: Any) {
         presentSecondViewController()
     }
     
+    //MARK:- Private methods
     private func setupCollection() -> [Places] {
         var tempArray = [Places]()
         let place1 = Places(image: UIImage(named: "place01")!, placeName: "Rahat Brasserie")
@@ -51,15 +56,16 @@ class ViewController: UIViewController {
         return tempArray
     }
     
-    func presentSecondViewController() {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let secondVC = storyboard.instantiateViewController(identifier: "FilerViewController")
-            secondVC.modalPresentationStyle = .overCurrentContext
-            present(secondVC, animated: false, completion: nil)
+    private func presentSecondViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let secondVC = storyboard.instantiateViewController(identifier: "FilerViewController")
+        secondVC.modalPresentationStyle = .overCurrentContext
+        present(secondVC, animated: false, completion: nil)
     }
 }
 
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+//MARK:- Extentions
+extension MainPageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var count = Int()
         if collectionView == self.placeCollectionView {
@@ -72,12 +78,12 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cellToReturn = UICollectionViewCell()
-
+        
         if collectionView == placeCollectionView {
-        let collection = placeCollection![indexPath.item]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlacesCollectionViewCell", for: indexPath) as! PlacesCollectionViewCell
-        cell.placeImageView.image = collection.image
-        cell.placeLabel.text = collection.placeName
+            let collection = placeCollection![indexPath.item]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PlacesCollectionViewCell", for: indexPath) as! PlacesCollectionViewCell
+            cell.placeImageView.image = collection.image
+            cell.placeLabel.text = collection.placeName
             cellToReturn = cell
         } else {
             let collection = categoryCollection![indexPath.item]
@@ -85,7 +91,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.categoryLabel.text = collection.categoryLabel
             cell.categoryPlaces.text = collection.placesLabel
             cell.categotyImage.image = collection.image
-                cellToReturn = cell
+            cellToReturn = cell
         }
         return cellToReturn
     }

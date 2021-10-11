@@ -18,7 +18,6 @@ class CustomView: UIView{
     }
 }
 
-
 @IBInspectable var borderColor: UIColor = UIColor.clear {
 
     didSet {
